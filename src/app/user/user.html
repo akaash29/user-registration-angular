@@ -1,83 +1,110 @@
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
-        <div class="card text-black" style="border-radius: 25px;">
-          <div class="card-body p-md-5">
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-
-                <form [formGroup] = "registerForm" (ngSubmit) = "onSubmit()" class="mx-1 mx-md-4">
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="form3Example1c">First Name</label>
-                      <input type="text" formControlName="firstName" id="form3Example1c" class="form-control" required/>
-                      @if (registerForm.get('firstName')?.touched && registerForm.get('firstName')?.hasError('required'))
+<!-- Registration 9 - Bootstrap Brain Component -->
+<section class="bg-primary py-3 py-md-5 py-xl-8">
+  <div class="container">
+    <div class="row gy-4 align-items-center">
+      <div class="col-12 col-md-6 col-xl-7">
+        <div class="d-flex justify-content-center text-bg-primary">
+          <div class="col-12 col-xl-9">
+            <img class="img-fluid rounded mb-4" loading="lazy" src="./assets/img/bsb-logo-light.svg" width="245" height="80" alt="BootstrapBrain Logo">
+            <hr class="border-primary-subtle mb-4">
+            <h2 class="h1 mb-4">We make digital products that drive you to stand out.</h2>
+            <p class="lead mb-5">We write words, take photos, make videos, and interact with artificial intelligence.</p>
+            <div class="text-endx">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-grip-horizontal" viewBox="0 0 16 16">
+                <path d="M2 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-xl-5">
+        <div class="card border-0 rounded-4">
+          <div class="card-body p-3 p-md-4 p-xl-5">
+            <div class="row">
+              <div class="col-12">
+                <div class="mb-4">
+                  <h2 class="h3">Registration</h2>
+                  <h3 class="fs-6 fw-normal text-secondary m-0">Enter your details to register</h3>
+                </div>
+              </div>
+            </div>
+            <form [formGroup] = "registerForm" (ngSubmit) = "onSubmit()">
+              <div class="row gy-3 overflow-hidden">
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" formControlName="firstName" class="form-control" name="firstName" id="firstName" placeholder="First Name" required>
+                    <label for="firstName" class="form-label">First Name</label>
+                  </div>
+                  @if (registerForm.get('firstName')?.touched && registerForm.get('firstName')?.hasError('required'))
                       {
                        <div class="error">First Name is required</div>   
-                      }                     
-                    </div>
+                      }
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" formControlName="lastName" class="form-control" name="lastName" id="lastName" placeholder="First Name" required>
+                    <label for="lastName" class="form-label">Last Name</label>
                   </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="form3Example1c">Last Name</label>
-                      <input type="text" formControlName="lastName" id="form3Example1c" class="form-control" />
-                      @if (registerForm.get('lastName')?.touched && registerForm.get('lastName')?.hasError('required'))
+                  @if (registerForm.get('lastName')?.touched && registerForm.get('lastName')?.hasError('required'))
                       {
                        <div class="error">Last Name is required</div>   
-                      }                 
-                    </div>
+                      }
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="email" formControlName="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                    <label for="email" class="form-label">Email</label>
                   </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="form3Example3c">Your Email</label>
-                      <input type="email" formControlName="email" id="form3Example3c" class="form-control" />
-                      @if (registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required'))
+                  @if (registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required'))
                       {
                        <div class="error">Email is required</div>   
                       }
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="form3Example3c">Mobile Number</label>
-                      <input type="email" formControlName="mobileNo" id="form3Example3c" class="form-control" />
-                      @if (registerForm.get('mobileNo')?.touched && registerForm.get('mobileNo')?.hasError('required'))
+                      @if (registerForm.get('email')?.dirty && registerForm.get('email')?.hasError('email'))
                       {
-                       <div class="error">mobileNo is required</div>   
+                       <div class="error">Please enter a valid Email</div>   
                       }
-                    </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" formControlName="mobileNo" class="form-control" name="mobileNo" id="mobileNo" placeholder="Mobile No." required>
+                    <label for="mobileNo" class="form-label">Mobile Number</label>
                   </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="form3Example3c">Salary</label>
-                      <input type="email" formControlName="salary" id="form3Example3c" class="form-control" />
-                      
-                    </div>
+                  @if (registerForm.get('mobileNo')?.touched && registerForm.get('mobileNo')?.hasError('required'))
+                      {
+                       <div class="error">Mobile No. is required</div>   
+                      }
+                      @if (registerForm.get('mobileNo')?.dirty && (registerForm.get('mobileNo')?.hasError('minlength')
+                      || registerForm.get('mobileNo')?.hasError('maxlength')
+                      || registerForm.get('mobileNo')?.hasError('numericvalidator'))
+                      )
+                      {
+                       <div class="error">Please enter a valid Mobile No.</div>   
+                      }
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" formControlName="salary" class="form-control" name="salary" id="salary" placeholder="Salary" required>
+                    <label for="salary" class="form-label">Salary</label>
                   </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="form3Example3c">Country</label>
-
-                      <select #countryselect class="form-control" (change)="onValueChange($event)">
+                  @if (registerForm.get('salary')?.touched && registerForm.get('salary')?.hasError('required'))
+                      {
+                       <div class="error">Salary is required</div>   
+                      }
+                      @if (registerForm.get('salary')?.dirty &&
+                      registerForm.get('salary')?.hasError('numericvalidator'))
+                      {
+                       <div class="error">Please enter a valid Salary</div>   
+                      }
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <select #countryselect class="form-control" (change)="onValueChange($event)">
                        @for (country of countries; track $index) {
                         <option value="{{country}}">{{country}}</option>
                         }                     
                     </select>
+                    <label for="country" class="form-label">Country</label>
+                  </div>                                        
 
                     @if (isManualMode) {
                     <div *ngIf="isManualMode">
@@ -85,7 +112,7 @@
                         <div class="input-group">
                         <input                         
                             type="text" 
-                            formControlName="manualText" 
+                            formControlName="manualText" class="form-control"
                             placeholder="Type custom text here..."
                             #customInput
                         />
@@ -94,40 +121,123 @@
                         </div>
                     </div>
                 }
-                      
+                </div>
+
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" formControlName="skill" class="form-control" (click)="SelectSkill($event)"  name="skill" id="lastName" value="{{selectedSkillsText}}" placeholder="Select Skill" required>
+                    <label for="skill" class="form-label">Skill</label>
+                  </div>
+                  @if (isSelectSkill) {
+                  <div>
+                    @for (skill of skills; track $index) {
+                    <div class="form-check">
+                      <input class="form-check-input skillInput" type="checkbox" value="skills" id="flexCheckDefault" (change)="onCheckboxChange(skill, $event)">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        {{skill}}
+                      </label>
+                    </div>                    
+                  }
+                  <button type="button" (click)="ShowManualSkill()" class="btn btn-primary btn-sm">Add new Skill</button> 
+
+                  @if (isManualSkillMode) {
+                    <div *ngIf="isManualSkillMode">
+                        <label for="customSkillInput">Enter custom skill:</label>
+                        <div class="input-group">
+                        <input                         
+                            type="text" 
+                            formControlName="manualText" class="form-control"
+                            placeholder="Type custom skill here..."
+                            #customSkillInput
+                        />
+                        <button type="button" (click)="addManualSkillEntry()">Add</button>
+                        <button type="button" (click)="cancelManualSkillEntry()">Cancel</button>
+                        </div>
                     </div>
+                }                   
                   </div> 
-                  
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                    <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file. Max file
-                        size 20 MB</div>
-                <input class="form-control form-control-lg" type="file" accept=".pdf" formControlName="cv" (change)="oncvFileChange($event)" />
-                
+                  }  
+                  </div>                                     
 
-              </div>
+                    
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="file" formControlName="photo" (change)="onphotoFileChange($event)" class="form-control" name="photo" id="photo" placeholder="Photo" required>
+                    <label for="lastName" class="form-label">Upload Photo</label>
+                  </div>
+                  @if (registerForm.get('photo')?.touched && registerForm.get('photo')?.hasError('required'))
+                      {
+                       <div class="error">Photo is required</div>   
+                      }
+                </div>
+
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="file" accept=".pdf" formControlName="cv" (change)="oncvFileChange($event)" formControlName="cv" class="form-control" name="cv" id="cv" placeholder="First Name" required>
+                    <label for="lastName" class="form-label">Upload your CV/Resume</label>
+                  </div>
+                  @if (registerForm.get('cv')?.touched && registerForm.get('cv')?.hasError('required'))
+                      {
+                       <div class="error">CV is required</div>   
+                      }
+                </div>
+
+
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <input type="password" formControlName="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
+                    <label for="password" class="form-label">Password</label>
                   </div>
 
-              <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                    <div class="small text-muted mt-2">Upload Photo</div>
-                <input class="form-control form-control-lg" type="file" formControlName="photo" (change)="onphotoFileChange($event)"/>
-                
-
-              </div>
+                  @if (registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required'))
+                      {
+                       <div class="error">Password is required</div>   
+                      }
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
+                    <label class="form-check-label text-secondary" for="iAgree">
+                      I agree to the <a href="#!" class="link-primary text-decoration-none">terms and conditions</a>
+                    </label>
                   </div>
-                                  
-
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg" [disabled]="registerForm.invalid" >Register</button>
+                </div>
+                <div class="col-12">
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg" [disabled]="registerForm.invalid">Sign up</button>
                   </div>
-
-                </form>
-
+                </div>
               </div>
-              
+            </form>
+            <div class="row">
+              <div class="col-12">
+                <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end mt-4">
+                  <p class="m-0 text-secondary text-center">Already have an account? <a href="#!" class="link-primary text-decoration-none">Sign in</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="mt-4 mb-4">Or continue with</p>
+                <div class="d-flex gap-2 gap-sm-3 justify-content-centerX">
+                  <a href="#!" class="btn btn-outline-danger bsb-btn-circle bsb-btn-circle-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                      <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                    </svg>
+                  </a>
+                  <a href="#!" class="btn btn-outline-primary bsb-btn-circle bsb-btn-circle-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                      <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                    </svg>
+                  </a>
+                  <a href="#!" class="btn btn-outline-dark bsb-btn-circle bsb-btn-circle-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-apple" viewBox="0 0 16 16">
+                      <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43Zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282Z" />
+                      <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43Zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282Z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

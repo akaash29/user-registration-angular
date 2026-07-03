@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, viewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, viewChild, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { saveAs } from 'file-saver';
+import { Subscription } from 'rxjs';
+import { UserService } from '../services/user.service';
+import { ToastrService } from 'ngx-toastr';
+import { numericValidator } from '../validator';
 
 @Component({
   selector: 'app-User',
@@ -9,48 +13,72 @@ import { saveAs } from 'file-saver';
   templateUrl: './user.html',
   styleUrl: './user.css'
 })
-export class User {
+export class User implements  OnDestroy {
   registerForm: FormGroup;
+  userformSubscription!:Subscription;
   @ViewChild('customInput') inputElement!: ElementRef<HTMLInputElement>;
+  @ViewChild('customSkillInput') inputSkillElement!: ElementRef<HTMLInputElement>;
   isManualMode:boolean = false;
+  isManualSkillMode:boolean = false;
+  isSelectSkill:boolean = false;
+  userService = inject(UserService);
   public countries: string[] = ['India', 'US', 'England', 'Add New Custom Option...'];
+  public skills: string[] = ['Angular', '.NET', 'Azure'];
+  public selectedSkills: string[] = [];
+  public selectedSkillsText: string = "";
 
-constructor(private fb: FormBuilder)
+constructor(private fb: FormBuilder,private toasterService:ToastrService)
 {
 this.registerForm = fb.group({
   firstName: ["", Validators.required],
   lastName: ["", Validators.required],
   email: ["", [Validators.required, Validators.email]],
-  mobileNo: ["", [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-  salary : [""],
-  photo : [null],
-  cv : [null]
+  mobileNo: ["", [Validators.required, Validators.maxLength(10), Validators.minLength(10), numericValidator]],
+  salary : ["", numericValidator],
+  photo : [null, [Validators.required]],
+  cv : [null, [Validators.required]],
+  password: ["", Validators.required],
+  skill: [null]
 })
 }
+
+ngOnDestroy(): void {
+    if(this.userformSubscription){
+      this.userformSubscription.unsubscribe();
+    }
+    
+  }
 
 onSubmit()
 {
   if(this.registerForm.valid)
   {
-    const formData = this.registerForm.getRawValue();
-    const jsonString = JSON.stringify(formData, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
 
-    const cvFileData: File = this.registerForm.get('cv')?.value;
-    const photoFileData: File = this.registerForm.get('photo')?.value;
-
-    const cvBlob = new Blob([cvFileData], { type: cvFileData.type });
-    const photBlob = new Blob([photoFileData], { type: photoFileData.type });
-  
-  // Prompt the browser to save it
-  saveAs(cvBlob, cvFileData.name);
-  saveAs(photBlob, photoFileData.name);
-
-  saveAs(blob, 'data-export.json');
+  this.userformSubscription= this.userService.addUser(this.registerForm.value).subscribe({
+      next:(response)=>{
+        console.log(response);
+        this.toasterService.success("User sucesfully added")
+        //this.router.navigateByUrl('/students');
+        
+      },
+      error:err=>{
+        console.log(err);
+        
+      }
+    })
     
     console.log(this.registerForm.value)
   }
 }
+
+SelectSkill(event: MouseEvent): void {
+    this.isSelectSkill = true;
+    console.log('Raw pointer event:', event);
+  }
+
+ShowManualSkill(): void {
+    this.isManualSkillMode = true;
+  }
 
 addManualEntry()
 {
@@ -65,6 +93,19 @@ addManualEntry()
 cancelManualEntry()
 {
   this.isManualMode = false;
+}
+
+addManualSkillEntry()
+{
+  const addedSkill = this.inputSkillElement.nativeElement.value;
+  this.skills.push(addedSkill);
+  this.isManualSkillMode = false;
+
+}
+
+cancelManualSkillEntry()
+{
+  this.isManualSkillMode = false;
 }
 
 onValueChange(event: Event): void {
@@ -105,5 +146,23 @@ onValueChange(event: Event): void {
     }
   }
 
-
+  onCheckboxChange(item: string, event: Event): void {
+    // Cast target to HTMLInputElement to prevent TypeScript errors
+    const isChecked = (event.target as HTMLInputElement).checked;
+    if (isChecked) {
+      // Add the item text if checked
+      this.selectedSkills.push(item);
+    } else {
+      // Remove the item text if unchecked
+      this.selectedSkills = this.selectedSkills.filter(val => val !== item);
+  }
+if (this.selectedSkills?.length) {
+     this.selectedSkillsText = this.selectedSkills.join(',');
+  
+  }
+this.registerForm.patchValue({
+    skill: this.selectedSkills
+  });
 }
+}
+
